@@ -7,7 +7,7 @@ knife4j:
         group-name: 默认分组
         api-rule: package
         api-rule-resources:
-          - com.tfzhang.ainaojin.controller
+          - com.zjgsu.hxy.AI_brain_teasers.controller
 
 ai:
   apiKey: ${AI_API_KEY:}

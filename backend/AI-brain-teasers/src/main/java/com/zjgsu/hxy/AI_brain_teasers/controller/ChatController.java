@@ -1,7 +1,7 @@
-package com.tfzhang.ainaojin.controller;
+package com.zjgsu.hxy.AI_brain_teasers.controller;
 
-import com.tfzhang.ainaojin.model.ChatRoom;
-import com.tfzhang.ainaojin.service.ChatService;
+import com.zjgsu.hxy.AI_brain_teasers.model.ChatRoom;
+import com.zjgsu.hxy.AI_brain_teasers.service.ChatService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

@@ -1,8 +1,8 @@
-package com.tfzhang.ainaojin.service.impl;
+package com.zjgsu.hxy.AI_brain_teasers.service.impl;
 
-import com.tfzhang.ainaojin.model.ChatRoom;
-import com.tfzhang.ainaojin.service.AiManager;
-import com.tfzhang.ainaojin.service.ChatService;
+import com.zjgsu.hxy.AI_brain_teasers.model.ChatRoom;
+import com.zjgsu.hxy.AI_brain_teasers.service.AiManager;
+import com.zjgsu.hxy.AI_brain_teasers.service.ChatService;
 import com.volcengine.ark.runtime.model.completion.chat.ChatMessage;
 import com.volcengine.ark.runtime.model.completion.chat.ChatMessageRole;
 import org.springframework.stereotype.Service;

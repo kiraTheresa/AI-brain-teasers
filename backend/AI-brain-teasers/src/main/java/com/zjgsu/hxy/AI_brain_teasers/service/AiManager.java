@@ -1,4 +1,4 @@
-package com.tfzhang.ainaojin.service;
+package com.zjgsu.hxy.AI_brain_teasers.service;
 
 import com.volcengine.ark.runtime.model.bot.completion.chat.BotChatCompletionRequest;
 import com.volcengine.ark.runtime.model.bot.completion.chat.BotChatCompletionResult;

@@ -1,4 +1,4 @@
-package com.tfzhang.ainaojin.model;
+package com.zjgsu.hxy.AI_brain_teasers.model;
 
 import com.volcengine.ark.runtime.model.completion.chat.ChatMessage;
 import lombok.Data;

@@ -1,6 +1,6 @@
-package com.tfzhang.ainaojin.service;
+package com.zjgsu.hxy.AI_brain_teasers.service;
 
-import com.tfzhang.ainaojin.model.ChatRoom;
+import com.zjgsu.hxy.AI_brain_teasers.model.ChatRoom;
 
 import java.util.List;
 

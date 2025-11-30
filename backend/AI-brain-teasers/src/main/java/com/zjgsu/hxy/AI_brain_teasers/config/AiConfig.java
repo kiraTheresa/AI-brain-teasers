@@ -1,4 +1,4 @@
-package com.tfzhang.ainaojin.config;
+package com.zjgsu.hxy.AI_brain_teasers.config;
 
 import com.volcengine.ark.runtime.service.ArkService;
 import okhttp3.ConnectionPool;
