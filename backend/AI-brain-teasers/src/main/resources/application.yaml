@@ -9,6 +9,10 @@ knife4j:
         api-rule-resources:
           - com.zjgsu.hxy.AI_brain_teasers.controller
 
+ai:
+  apiKey: 782e9281-7e8a-41ad-b297-6c838f75f39b
+
+
 # src/main/resources/application.yml
 volc:
   ark:
