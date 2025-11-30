@@ -3,8 +3,8 @@ package com.zjgsu.hxy.AI_brain_teasers.service.impl;
 import com.zjgsu.hxy.AI_brain_teasers.model.ChatRoom;
 import com.zjgsu.hxy.AI_brain_teasers.service.AiManager;
 import com.zjgsu.hxy.AI_brain_teasers.service.ChatService;
-import com.volcengine.ark.runtime.model.completion.chat.ChatMessage;
-import com.volcengine.ark.runtime.model.completion.chat.ChatMessageRole;
+import com.zjgsu.hxy.AI_brain_teasers.model.ChatMessage;
+import com.zjgsu.hxy.AI_brain_teasers.model.ChatMessageRole;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

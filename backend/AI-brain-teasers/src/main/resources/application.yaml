@@ -9,16 +9,10 @@ knife4j:
         api-rule-resources:
           - com.zjgsu.hxy.AI_brain_teasers.controller
 
-ai:
-  apiKey: 782e9281-7e8a-41ad-b297-6c838f75f39b
-  botId: bot-20251005202857-74jzd
-
-
-# src/main/resources/application.yml
-volc:
-  ark:
-    api-key: 782e9281-7e8a-41ad-b297-6c838f75f39b
-    endpoint: ark.cn-beijing.volces.com
+deepseek:
+  api-key: ${DEEPSEEK_API_KEY:}
+  base-url: https://api.deepseek.com/v1
+  model: deepseek-chat
 
 # Spring 配置
 spring:
@@ -31,4 +25,3 @@ spring:
 logging:
   level:
     com.zjgsu.hxy.AI_brain_teasers: DEBUG
-    com.volcengine.ark: DEBUG

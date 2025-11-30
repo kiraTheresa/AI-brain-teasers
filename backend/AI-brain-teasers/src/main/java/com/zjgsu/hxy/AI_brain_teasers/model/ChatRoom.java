@@ -1,6 +1,5 @@
 package com.zjgsu.hxy.AI_brain_teasers.model;
 
-import com.volcengine.ark.runtime.model.completion.chat.ChatMessage;
 import java.util.List;
 
 public class ChatRoom {
