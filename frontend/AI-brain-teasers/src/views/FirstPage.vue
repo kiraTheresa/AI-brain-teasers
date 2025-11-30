@@ -13,11 +13,11 @@ const start = () => {
 <template>
   <div style="min-height: 100vh; display: flex; align-items: center; justify-content: center;">
     <div style="text-align: center;">
-      <Typography.Title level="2">AI 脑筋急转弯</Typography.Title>
+      <Typography.Title :level="2">AI 脑筋急转弯</Typography.Title>
       <Button type="primary" size="large" @click="start">开始游戏</Button>
     </div>
   </div>
-  </template>
+</template>
 
 <style scoped>
 </style>
