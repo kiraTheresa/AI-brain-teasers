@@ -10,7 +10,8 @@ knife4j:
           - com.zjgsu.hxy.AI_brain_teasers.controller
 
 deepseek:
-  api-key: ${DEEPSEEK_API_KEY:}
+  # api-key: ${DEEPSEEK_API_KEY:}
+  api-key: sk-c2a3b2efff4a429f85e657fd4be02775
   base-url: https://api.deepseek.com/v1
   model: deepseek-chat
 
