@@ -9,5 +9,21 @@ knife4j:
         api-rule-resources:
           - com.zjgsu.hxy.AI_brain_teasers.controller
 
-ai:
-  apiKey: 782e9281-7e8a-41ad-b297-6c838f75f39b
+# src/main/resources/application.yml
+volc:
+  ark:
+    api-key: 782e9281-7e8a-41ad-b297-6c838f75f39b
+    endpoint: ark.cn-beijing.volces.com
+
+# Spring 配置
+spring:
+  application:
+    name: AI-brain-teasers
+  profiles:
+    active: dev
+
+# 日志配置（用于调试）
+logging:
+  level:
+    com.zjgsu.hxy.AI_brain_teasers: DEBUG
+    com.volcengine.ark: DEBUG
