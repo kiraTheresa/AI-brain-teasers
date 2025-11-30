@@ -10,4 +10,4 @@ knife4j:
           - com.zjgsu.hxy.AI_brain_teasers.controller
 
 ai:
-  apiKey: ${AI_API_KEY:}
+  apiKey: 782e9281-7e8a-41ad-b297-6c838f75f39b
