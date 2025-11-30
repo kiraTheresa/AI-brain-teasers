@@ -98,6 +98,17 @@ watch(
       <div class="sidebar-header">
         <h2>💡 AI 脑筋急转弯</h2>
       </div>
+      <div class="new-chat-section">
+        <a-button 
+          type="primary" 
+          block 
+          class="new-chat-btn"
+          @click="$router.push({ name: 'chat', params: { roomId: Math.floor(Math.random() * 900000) + 100000 } })"
+        >
+          <span class="new-chat-icon">✨</span>
+          <span class="new-chat-text">新对话</span>
+        </a-button>
+      </div>
       <div class="sidebar-content">
         <div class="section-title">历史对话</div>
         <div class="rooms-list">
@@ -204,6 +215,39 @@ watch(
   min-height: 100vh;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  overflow: hidden;
+}
+
+/* 新对话按钮区域 */
+.new-chat-section {
+  padding: 0 20px 20px;
+}
+
+.new-chat-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  padding: 14px 16px !important;
+  font-weight: 600 !important;
+  color: white !important;
+  transition: all 0.3s ease !important;
+  height: auto !important;
+  text-align: center !important;
+}
+
+.new-chat-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4) !important;
+  background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%) !important;
+}
+
+.new-chat-icon {
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+.new-chat-text {
+  font-size: 14px;
 }
 
 /* 左侧边栏 */
@@ -507,5 +551,95 @@ watch(
 
 .messages-container::-webkit-scrollbar-thumb:hover {
   background: rgba(102, 126, 234, 0.7);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .chat-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+  
+  .sidebar {
+    max-height: 200px;
+    border-right: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .sidebar-content {
+    max-height: 100px;
+  }
+  
+  .rooms-list {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 10px;
+  }
+  
+  .room-btn {
+    white-space: nowrap;
+    min-width: 150px;
+  }
+  
+  .chat-header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+  
+  .header-actions {
+    justify-content: center;
+  }
+  
+  .message-content-wrapper {
+    max-width: 85%;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar-header h2 {
+    font-size: 16px;
+  }
+  
+  .chat-header h1 {
+    font-size: 18px;
+  }
+  
+  .chat-header, .input-container {
+    padding: 16px;
+  }
+  
+  .messages-container {
+    padding: 16px;
+  }
+  
+  .message-content {
+    font-size: 14px;
+    padding: 12px 16px;
+  }
+  
+  .header-actions {
+    flex-direction: column;
+  }
+}
+
+/* 修复元素堆叠问题 */
+.chat-container * {
+  box-sizing: border-box;
+}
+
+.messages-container {
+  position: relative;
+  z-index: 1;
+}
+
+.input-container {
+  position: relative;
+  z-index: 2;
+}
+
+/* 确保滚动条不影响布局 */
+.messages-container {
+  scrollbar-gutter: stable;
 }
 </style>
