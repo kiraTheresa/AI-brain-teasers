@@ -5,17 +5,22 @@ import com.volcengine.ark.runtime.model.bot.completion.chat.BotChatCompletionRes
 import com.volcengine.ark.runtime.model.completion.chat.ChatMessage;
 import com.volcengine.ark.runtime.model.completion.chat.ChatMessageRole;
 import com.volcengine.ark.runtime.service.ArkService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import retrofit2.adapter.rxjava2.HttpException;
 
 @Service
 public class AiManager {
 
     @Resource
     private ArkService service;
+
+    @Value("${ai.botId}")
+    private String botId;
 
     public String doChat(String systemPrompt, String userPrompt) {
         final List<ChatMessage> messages = new ArrayList<>();
@@ -28,14 +33,21 @@ public class AiManager {
 
     public String doChat(List<ChatMessage> messages) {
         BotChatCompletionRequest chatCompletionRequest = BotChatCompletionRequest.builder()
-                .botId("bot-20251005202857-74jzd")
+                .botId(botId)
                 .messages(messages)
                 .build();
 
-        BotChatCompletionResult chatCompletionResult = service.createBotChatCompletion(chatCompletionRequest);
-        if (chatCompletionResult.getChoices() == null || chatCompletionResult.getChoices().isEmpty()) {
-            throw new RuntimeException("AI没有返回结果");
+        try {
+            BotChatCompletionResult chatCompletionResult = service.createBotChatCompletion(chatCompletionRequest);
+            if (chatCompletionResult.getChoices() == null || chatCompletionResult.getChoices().isEmpty()) {
+                throw new RuntimeException("AI没有返回结果");
+            }
+            return (String) chatCompletionResult.getChoices().get(0).getMessage().getContent();
+        } catch (HttpException e) {
+            if (e.code() == 401) {
+                throw new RuntimeException("鉴权失败：请检查 ai.apiKey 是否有效，以及 botId 是否具备访问权限");
+            }
+            throw e;
         }
-        return (String) chatCompletionResult.getChoices().get(0).getMessage().getContent();
     }
 }

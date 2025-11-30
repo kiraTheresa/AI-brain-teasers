@@ -20,6 +20,10 @@ public class AiConfig {
         ConnectionPool connectionPool = new ConnectionPool(5, 1, TimeUnit.SECONDS);
         Dispatcher dispatcher = new Dispatcher();
 
+        if (apiKey == null || apiKey.trim().isEmpty()) {
+            throw new IllegalStateException("未配置 ai.apiKey，无法调用火山方舟接口");
+        }
+
         return ArkService.builder()
                 .dispatcher(dispatcher)
                 .connectionPool(connectionPool)

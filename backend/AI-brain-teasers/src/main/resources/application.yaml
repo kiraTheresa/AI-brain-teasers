@@ -11,6 +11,7 @@ knife4j:
 
 ai:
   apiKey: 782e9281-7e8a-41ad-b297-6c838f75f39b
+  botId: bot-20251005202857-74jzd
 
 
 # src/main/resources/application.yml
