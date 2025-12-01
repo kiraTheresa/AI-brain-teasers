@@ -23,15 +23,19 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public String doChat(long roomId, String userPrompt) {
+        // 将已生成的问题列表转换为字符串，用于提示AI避免重复
+        String historyQuestions = String.join("\n", generatedQuestions);
+        
         String systemPrompt = "你是一位脑筋急转弯游戏主持人，我们将进行一个“是非问答”推理游戏。\n\n" +
-                "游戏规则如下：\n\n" +
-                "当我说“开始”时，你要随机出一道脑筋急转弯题目（题干简短、有趣、但需要逻辑推理或反向思考）。\n\n" +
-                "出题后，你只负责回答我的提问，每次只能回答以下三种之一：\n\n" +
-                "是\n\n" +
-                "否\n\n" +
-                "与此无关\n\n" +
-                "在合适的时候，你可以适当引导我，比如说“你离真相更近了”或“你可能忽略了某个细节”。\n\n" +
-                "游戏结束条件（满足任一即可）：\n\n" +
+                "【题目生成要求】\n" +
+                "1. 当我说“开始”时，你必须生成一个全新的、从未在任何对话中出现过的脑筋急转弯推理题。\n" +
+                "2. 每道题目必须有独特背景、场景和细节，不得使用任何常见模板（如掉进洞里、深夜敲门、奇怪电话等网络高频题）。\n" +
+                "3. 每次必须加入随机性：随机题材（悬疑、搞笑、生活、校园、科幻等）、随机角色、随机事件。\n" +
+                "4. 不得与历史题目重复。（历史题目列表：" + historyQuestions + "）\n\n" +
+                "【答题规则】\n" +
+                "出题后，你只回答“是 / 否 / 与此无关”\n" +
+                "必要时可以提示方向，但不得直接给出关键线索。\n\n" +
+                "【游戏结束条件】\n" +
                 "我说出“不想玩了”、“告诉我答案”、“揭晓答案”等类似表达；\n\n" +
                 "我已经基本推理出真相、还原了故事，或所有关键问题都被询问到；\n\n" +
                 "我输入“退出”；\n\n" +
@@ -50,30 +54,27 @@ public class ChatServiceImpl implements ChatService {
             messages.add(systemMessage);
         } else {
             messages = chatHistories.getOrDefault(roomId, new ArrayList<>());
-        }
-        messages.add(userMessage);
-
-        String answer;
-        // 如果是新游戏开始，生成问题时进行去重处理
-        if ("开始".equals(userPrompt) && messages.size() == 2) {
-            int maxAttempts = 5; // 最多尝试5次生成不重复的问题
-            boolean foundUnique = false;
-            for (int i = 0; i < maxAttempts; i++) {
-                String tempAnswer = aiManager.doChat(messages);
-                // 检查问题是否已生成过
-                if (!generatedQuestions.contains(tempAnswer)) {
-                    answer = tempAnswer;
-                    generatedQuestions.add(answer);
-                    foundUnique = true;
+            // 更新系统消息的内容，确保包含最新的历史问题列表
+            boolean hasSystemMessage = false;
+            for (int i = 0; i < messages.size(); i++) {
+                if (messages.get(i).getRole() == ChatMessageRole.SYSTEM) {
+                    messages.set(i, systemMessage);
+                    hasSystemMessage = true;
                     break;
                 }
             }
-            // 如果尝试了多次都没有找到不重复的问题，就使用新生成的一个
-            if (!foundUnique) {
-                answer = aiManager.doChat(messages);
+            if (!hasSystemMessage) {
+                messages.add(0, systemMessage);
             }
-        } else {
-            answer = aiManager.doChat(messages);
+        }
+        messages.add(userMessage);
+
+        // 调用AI生成回答，确保answer变量被初始化
+        String answer = aiManager.doChat(messages);
+        
+        // 如果是新生成的问题，添加到已生成问题集合
+        if ("开始".equals(userPrompt) && messages.size() >= 2) {
+            generatedQuestions.add(answer);
         }
 
         final ChatMessage answerMessage = ChatMessage.builder().role(ChatMessageRole.ASSISTANT).content(answer).build();
