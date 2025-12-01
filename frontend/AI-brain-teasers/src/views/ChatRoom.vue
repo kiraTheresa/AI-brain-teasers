@@ -65,6 +65,21 @@ const send = async () => {
   }
 }
 
+// 结束游戏
+const endGame = async () => {
+  try {
+    const reply = await postChat(roomId.value, '退出')
+    messages.push({ role: 'USER', content: '退出' })
+    messages.push({ role: 'ASSISTANT', content: reply })
+    ended.value = true
+    scrollToBottom()
+  } catch (e) {
+    antdMessage.error('结束游戏失败')
+  } finally {
+    fetchRooms()
+  }
+}
+
 // 滚动到底部
 const scrollToBottom = () => {
   nextTick(() => {
@@ -147,6 +162,7 @@ watch(
             danger 
             :disabled="ended" 
             class="end-btn"
+            @click="endGame"
           >
             <template #icon><CloseCircleOutlined /></template>
             结束游戏

@@ -16,6 +16,9 @@ public class ChatServiceImpl implements ChatService {
     @Resource
     private AiManager aiManager;
 
+    // 存储已生成的问题，避免重复
+    private final Set<String> generatedQuestions = new HashSet<>();
+
     final Map<Long, List<ChatMessage>> chatHistories = new HashMap<>();
 
     @Override
@@ -50,7 +53,29 @@ public class ChatServiceImpl implements ChatService {
         }
         messages.add(userMessage);
 
-        String answer = aiManager.doChat(messages);
+        String answer;
+        // 如果是新游戏开始，生成问题时进行去重处理
+        if ("开始".equals(userPrompt) && messages.size() == 2) {
+            int maxAttempts = 5; // 最多尝试5次生成不重复的问题
+            boolean foundUnique = false;
+            for (int i = 0; i < maxAttempts; i++) {
+                String tempAnswer = aiManager.doChat(messages);
+                // 检查问题是否已生成过
+                if (!generatedQuestions.contains(tempAnswer)) {
+                    answer = tempAnswer;
+                    generatedQuestions.add(answer);
+                    foundUnique = true;
+                    break;
+                }
+            }
+            // 如果尝试了多次都没有找到不重复的问题，就使用新生成的一个
+            if (!foundUnique) {
+                answer = aiManager.doChat(messages);
+            }
+        } else {
+            answer = aiManager.doChat(messages);
+        }
+
         final ChatMessage answerMessage = ChatMessage.builder().role(ChatMessageRole.ASSISTANT).content(answer).build();
         messages.add(answerMessage);
 
